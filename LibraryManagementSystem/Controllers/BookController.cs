@@ -33,7 +33,7 @@ namespace LibraryManagementSystem.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                     else {
-                        TempData["errorMessage"] = result.ErrorMessage;
+                        TempData["errorMessage"] = "Failed to Register the Book. Please Recheck the Book Details";
                         return View("Index");
                     }
                 }

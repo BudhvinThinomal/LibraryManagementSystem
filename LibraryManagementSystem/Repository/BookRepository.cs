@@ -4,7 +4,6 @@ using LibraryManagementSystem.Models.Request;
 using LibraryManagementSystem.Models.Response;
 using System.Data;
 using System.Data.SqlClient;
-using System.Reflection.Metadata;
 
 namespace LibraryManagementSystem.Repository
 {
@@ -80,7 +79,7 @@ namespace LibraryManagementSystem.Repository
 
                     if (_ID == 0)
                     {
-                        throw new Exception("Failed to register the Book");
+                        throw new Exception("Failed to Register the Book");
                     }
 
                     resp.ID = _ID;
