@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //Service
+builder.Services.AddTransient<BookService>();
 builder.Services.AddTransient<StudentService>();
 //Repository
+builder.Services.AddTransient<BookRepository>();
 builder.Services.AddTransient<StudentRepository>();
 
 

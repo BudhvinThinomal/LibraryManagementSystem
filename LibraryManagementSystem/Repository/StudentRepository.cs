@@ -2,7 +2,6 @@
 using LibraryManagementSystem.Models.Entities;
 using System.Data;
 using System.Data.SqlClient;
-using System.Reflection.Metadata;
 
 namespace LibraryManagementSystem.Repository
 {
@@ -30,8 +29,6 @@ namespace LibraryManagementSystem.Repository
         {
             try
             {
-                List<StudentModel> studentList = new List<StudentModel>();
-
                  using (IDbConnection con = connection)
                 {
                     string Query = "sp_GetAllStudents";
