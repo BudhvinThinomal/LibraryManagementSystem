@@ -15,11 +15,11 @@ namespace LibraryManagementSystem.Service
         }
 
         //Get All Books
-        public List<BookModel> GetAllBooks()
+        public List<BookModel> GetAllBooks(GetAllBookRequest request)
         {
             try
             {
-                return _bookRepository.GetAllBooks();
+                return _bookRepository.GetAllBooks(request);
             }
             catch (Exception ex)
             {

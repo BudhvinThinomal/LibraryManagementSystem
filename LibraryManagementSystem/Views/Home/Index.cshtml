@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<LibraryManagementSystem.Models.Entities.BookModel>
+
+@{
     ViewData["Title"] = "Home";
     var successMessage = TempData["successMessage"]?.ToString();
     var errorMessage = TempData["errorMessage"]?.ToString();
@@ -27,33 +29,29 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
     <table class="table table-responsive table-hover">
         <thead>
             <tr class="table-active">
-                <th>StudentID</th>
+                <th>Ref Number</th>
+                <th>Title</th>
+                <th>Publication</th>
+                <th>Author</th>
                 <th>Student Name</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Telephone</th>
-                <th>Registered Date</th>
-                <th>Terminated Date</th>
+                <th>Issued Date</th>
+                <th>Return Date</th>
             </tr>
         </thead>
 
         <tbody>
             @if (Model != null && Model.Any())
             {
-                @foreach (var student in Model)
+                @foreach (var book in Model)
                 {
                     <tr>
-                        <td>@student.StudentID</td>
-                        <td>@student.StudentName</td>
-                        <td>@student.FirstName</td>
-                        <td>@student.LastName</td>
-                        <td>@student.Email</td>
-                        <td>@student.Address</td>
-                        <td>@student.Telephone</td>
-                        <td>@student.RegisteredDate</td>
-                        <td>@student.TerminatedDate</td>
+                        <td>@book.ReferenceNumber</td>
+                        <td>@book.Title</td>
+                        <td>@book.Publication</td>
+                        <td>@book.Author</td>
+                        <td>@book.StudentName</td>
+                        <td>@book.IssueDate</td>
+                        <td>@book.ReturnDate</td>
                     </tr>
                 }
 
@@ -61,7 +59,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
             else
             {
                 <tr>
-                    <td colspan="9">
+                    <td colspan="7">
                         <div class="text-center">
                             <h6>No Book Records Available!!</h6>
                         </div>

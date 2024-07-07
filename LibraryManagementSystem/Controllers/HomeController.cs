@@ -1,4 +1,7 @@
 ﻿using LibraryManagementSystem.Models;
+using LibraryManagementSystem.Models.Entities;
+using LibraryManagementSystem.Models.Request;
+using LibraryManagementSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +10,30 @@ namespace LibraryManagementSystem.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BookService _bookService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BookService bookService)
         {
             _logger = logger;
+            _bookService = bookService;
         }
+
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(GetAllBookRequest request)
         {
-            return View();
+            List<BookModel> bookList = new List<BookModel>();
+
+            try
+            {
+                bookList = _bookService.GetAllBooks(request);
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+
+            }
+
+            return View(bookList);
         }
 
 

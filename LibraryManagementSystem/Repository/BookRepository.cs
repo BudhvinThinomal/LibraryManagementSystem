@@ -25,7 +25,7 @@ namespace LibraryManagementSystem.Repository
         }
 
         //Get All Books
-        public List<BookModel> GetAllBooks()
+        public List<BookModel> GetAllBooks(GetAllBookRequest request)
         {
             try
             {
@@ -34,8 +34,10 @@ namespace LibraryManagementSystem.Repository
                     string Query = "sp_GetAllBooks";
                     con.Open();
                     DynamicParameters param = new DynamicParameters();
-                    //param.Add("@Page", request.Page);
-                    //param.Add("@Limit", request.Limit);
+                    param.Add("@Parameter", request.Parameter);
+                    param.Add("@IssueDate", request.IssueDate);
+                    param.Add("@Page", request.Page);
+                    param.Add("@Limit", request.Limit);
 
                     List<BookModel> resp = con.Query<BookModel>(Query, param, commandType: CommandType.StoredProcedure).ToList();
 
