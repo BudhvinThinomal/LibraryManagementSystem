@@ -1,7 +1,12 @@
+using LibraryManagementSystem.Repository;
+using LibraryManagementSystem.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<StudentRepository>();
+builder.Services.AddScoped<StudentService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,56 @@
+﻿@model List<LibraryManagementSystem.Models.Entities.StudentModel>
+
+@{
+    ViewData["Title"] = "Students Details";
+}
+
+<h3>@ViewData["Title"]</h3>
+<hr/>
+
+<form>
+    <table class="table table-responsive table-hover">
+        <thead>
+            <tr class="table-active">
+                <th>StudentID</th>
+                <th>Student Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Telephone</th>
+                <th>Registered Date</th>
+                <th>Terminated Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model !=null && Model.Any())
+            {
+                @foreach (var student in Model)
+                {
+                    <tr>
+                        <td>@student.StudentID</td>
+                        <td>@student.StudentName</td>
+                        <td>@student.FirstName</td>
+                        <td>@student.LastName</td>
+                        <td>@student.Email</td>
+                        <td>@student.Address</td>
+                        <td>@student.Telephone</td>
+                        <td>@student.RegisteredDate</td>
+                        <td>@student.TerminatedDate</td>
+                    </tr>
+                }
+                
+            } else
+            {
+                <tr>
+                    <td colspan="6">
+                        <div>
+                            No Book Records Available!!
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
