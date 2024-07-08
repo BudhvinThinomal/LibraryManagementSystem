@@ -36,8 +36,8 @@ namespace LibraryManagementSystem.Repository
                     string Query = "sp_CreateIssueBook";
                     con.Open();
                     DynamicParameters param = new DynamicParameters();
-                    param.Add("@ReferenceNumber", request.ReferenceNumber);
-                    param.Add("@StudentID", request.StudentID);
+                    param.Add("@ReferenceNumber", request.ReferenceNumber.ToString());
+                    param.Add("@StudentID", request.StudentID.ToString());
                     param.Add("@IssueDate", request.IssueDate);
                     param.Add("@ReturnDate", request.ReturnDate);
 

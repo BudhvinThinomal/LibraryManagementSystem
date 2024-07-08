@@ -1,4 +1,4 @@
-﻿@model LibraryManagementSystem.Models.Request.CreateIssueBookRequest
+﻿@model LibraryManagementSystem.Models.IssueBookView
 
 @{
     ViewData["Title"] = "Issue Books";
@@ -28,29 +28,20 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
 <form method="post" asp-action="CreateIssueBook" class="mt-3" autocomplete="off">
     <div class="mb-3">
         <label class="form-label">Select Book</label>
-        <select name="ReferenceNumber" class="form-control" asp-for="ReferenceNumber">
-            <option value="Fiction">Fiction</option>
-            <option value="Nonfiction">Nonfiction</option>
+        <select class="form-control" asp-items="Model.SelectBookList" asp-for="CreateIssueBookRequest.ReferenceNumber">
         </select>
-        <span asp-validation-for="ReferenceNumber" class="text-danger"></span>
+        <span asp-validation-for="CreateIssueBookRequest.ReferenceNumber" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label class="form-label">Select Student</label>
-        <select name="StudentID" class="form-control" asp-for="StudentID">
-            <option value="Fiction">Fiction</option>
-            <option value="Nonfiction">Nonfiction</option>
+        <select class="form-control" asp-items="Model.SelectStudentList" asp-for="CreateIssueBookRequest.StudentID">
         </select>
-        <span asp-validation-for="StudentID" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Issue Date</label>
-        <input type="date" class="form-control" asp-for="IssueDate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
-        <span asp-validation-for="IssueDate" class="text-danger"></span>
+        <span asp-validation-for="CreateIssueBookRequest.StudentID" class="text-danger"></span>
     </div>
     <div class="mb-5">
         <label class="form-label">Return Date</label>
-        <input type="date" class="form-control" asp-for="ReturnDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
-        <span asp-validation-for="ReturnDate" class="text-danger"></span>
+        <input type="date" class="form-control" asp-for="CreateIssueBookRequest.ReturnDate" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="CreateIssueBookRequest.ReturnDate" class="text-danger"></span>
     </div>
     <div>
         <input type="submit" class="btn btn-primary form-control" />

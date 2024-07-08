@@ -7,10 +7,10 @@ namespace LibraryManagementSystem.Models.Request
     {
         [DisplayName("Reference Number")]
         [Required]
-        public int ReferenceNumber { get; set; }
+        public string ReferenceNumber { get; set; }
         [DisplayName("Student ID")]
         [Required]
-        public int StudentID { get; set; }
+        public string StudentID { get; set; }
         [DisplayName("Issue Date")]
         [Required]
         public DateTime IssueDate { get; set; }
