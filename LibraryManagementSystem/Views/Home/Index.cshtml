@@ -26,9 +26,9 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
 
 
 <form>
-    <table class="table table-responsive table-hover">
-        <thead>
-            <tr class="table-active">
+    <table id="bookTable" class="table table-bordered table-striped table-responsive table-hover">
+        <thead class="bg-dark text-light">
+            <tr class="text-center">
                 <th>Ref Number</th>
                 <th>Title</th>
                 <th>Publication</th>
@@ -69,3 +69,16 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
         </tbody>
     </table>
 </form>
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#bookTable').DataTable({
+                searching: false,
+                pageLength: 25
+            });
+
+        });
+    </script>
+}
