@@ -20,13 +20,17 @@ namespace LibraryManagementSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(GetAllBookRequest request)
+        public IActionResult Index(string searchString)
         {
             List<BookModel> bookList = new List<BookModel>();
+            GetAllBookRequest getAllBookRequest = new GetAllBookRequest()
+            {
+                Parameter = searchString
+            };
 
             try
             {
-                bookList = _bookService.GetAllBooks(request);
+                bookList = _bookService.GetAllBooks(getAllBookRequest);
             }
             catch (Exception ex)
             {
@@ -36,7 +40,7 @@ namespace LibraryManagementSystem.Controllers
 
             HomeView homeView = new HomeView() { 
                 BookList = bookList,
-                GetAllBookRequest = request
+                GetAllBookRequest = getAllBookRequest
             };
 
             return View(homeView);
