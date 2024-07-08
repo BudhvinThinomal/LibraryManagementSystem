@@ -41,7 +41,24 @@ namespace LibraryManagementSystem.Controllers
         {
             List<BookModel> bookList = new List<BookModel>();
 
-            
+            System.Threading.Thread.Sleep(2000);
+            int draw = Convert.ToInt32(Request.Query["draw"]);
+
+            // Page Index
+            int page = Convert.ToInt32(Request.Query["start"]);
+
+            // Page Limit
+            int limit = Convert.ToInt32(Request.Query["length"]);
+
+            // Getting Sort Column Name
+            int sortColumnIdx = Convert.ToInt32(Request.Query["order[0][column]"]);
+            string sortColumnName = Request.Query["columns[" + sortColumnIdx + "][name]"];
+
+            // Sort Column Direction  
+            string sortColumnDirection = Request.Query["order[0][dir]"];
+
+            // Search Value
+            string parameter = Request.Query["search[value]"].FirstOrDefault()?.Trim();
 
             try
             {
@@ -63,25 +80,6 @@ namespace LibraryManagementSystem.Controllers
 
             if (bookList != null && bookList.Count > 0)
             {
-
-                System.Threading.Thread.Sleep(2000);
-            int draw = Convert.ToInt32(Request.Query["draw"]);
-
-            // Page Index
-            int page = Convert.ToInt32(Request.Query["start"]);
-
-            // Page Limit
-            int limit = Convert.ToInt32(Request.Query["length"]);
-
-            // Getting Sort Column Name
-            int sortColumnIdx = Convert.ToInt32(Request.Query["order[0][column]"]);
-            string sortColumnName = Request.Query["columns[" + sortColumnIdx + "][name]"];
-
-            // Sort Column Direction  
-            string sortColumnDirection = Request.Query["order[0][dir]"];
-
-            // Search Value
-            string parameter = Request.Query["search[value]"].FirstOrDefault()?.Trim();
                 // Total count matching search criteria 
                 int recordsFilteredCount =
                     bookList
