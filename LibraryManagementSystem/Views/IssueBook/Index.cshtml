@@ -4,7 +4,8 @@
     ViewData["Title"] = "Issue Books";
     var successMessage = TempData["successMessage"]?.ToString();
     var errorMessage = TempData["errorMessage"]?.ToString();
-    int currentYear = DateTime.Now.Year;
+    var isBookListEmpty = Model.SelectBookList == null || !Model.SelectBookList.Any();
+    var isStudentListEmpty = Model.SelectStudentList == null || !Model.SelectStudentList.Any();
 }
 
 <h3>@ViewData["Title"]?.ToString()</h3>
@@ -44,7 +45,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
         <span asp-validation-for="CreateIssueBookRequest.ReturnDate" class="text-danger"></span>
     </div>
     <div>
-        <input type="submit" class="btn btn-primary form-control" />
+        <input type="submit" class="btn btn-primary form-control" @(isBookListEmpty || isStudentListEmpty ? "disabled" : "") />
     </div>
 </form>
 @section Scripts{
