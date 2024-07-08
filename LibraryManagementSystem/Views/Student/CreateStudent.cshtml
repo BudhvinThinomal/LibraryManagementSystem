@@ -49,7 +49,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
         <input type="text" class="form-control" asp-for="Telephone" />
         <span asp-validation-for="Telephone" class="text-danger"></span>
     </div>
-    <div class="mb-3">
+    <div class="mb-5">
         <label class="form-label">Registered Date</label>
         <input type="date" class="form-control" asp-for="RegisteredDate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="RegisteredDate" class="text-danger"></span>

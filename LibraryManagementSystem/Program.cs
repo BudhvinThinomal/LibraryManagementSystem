@@ -9,10 +9,11 @@ builder.Services.AddControllersWithViews();
 //Service
 builder.Services.AddTransient<BookService>();
 builder.Services.AddTransient<StudentService>();
+builder.Services.AddTransient<IssueBookService>();
 //Repository
 builder.Services.AddTransient<BookRepository>();
 builder.Services.AddTransient<StudentRepository>();
-
+builder.Services.AddTransient<IssueBookRepository>();
 
 var app = builder.Build();
 

@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Dapper;
+﻿using Dapper;
 using LibraryManagementSystem.Models.Entities;
 using LibraryManagementSystem.Models.Request;
 using LibraryManagementSystem.Models.Response;
