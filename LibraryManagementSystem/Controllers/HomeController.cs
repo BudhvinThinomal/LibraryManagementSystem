@@ -41,7 +41,30 @@ namespace LibraryManagementSystem.Controllers
         {
             List<BookModel> bookList = new List<BookModel>();
 
-            System.Threading.Thread.Sleep(2000);
+            
+
+            try
+            {
+                GetAllBookRequest request = new GetAllBookRequest()
+                {
+                    Parameter = null,
+                    IssueDate = null,
+                    Page = null,
+                    Limit = null
+                };
+
+                bookList = _bookService.GetAllBooks(request);
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+
+            }
+
+            if (bookList != null && bookList.Count > 0)
+            {
+
+                System.Threading.Thread.Sleep(2000);
             int draw = Convert.ToInt32(Request.Query["draw"]);
 
             // Page Index
@@ -59,27 +82,6 @@ namespace LibraryManagementSystem.Controllers
 
             // Search Value
             string parameter = Request.Query["search[value]"].FirstOrDefault()?.Trim();
-
-            try
-            {
-                GetAllBookRequest request = new GetAllBookRequest()
-                {
-                    Parameter = parameter,
-                    IssueDate = null,
-                    Page = page,
-                    Limit = limit
-                };
-
-                bookList = _bookService.GetAllBooks(request);
-            }
-            catch (Exception ex)
-            {
-                TempData["errorMessage"] = ex.Message;
-
-            }
-
-            if (bookList != null && bookList.Count > 0)
-            {
                 // Total count matching search criteria 
                 int recordsFilteredCount =
                     bookList
