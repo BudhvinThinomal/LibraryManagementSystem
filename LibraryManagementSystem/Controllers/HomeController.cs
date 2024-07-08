@@ -4,7 +4,6 @@ using LibraryManagementSystem.Models.Request;
 using LibraryManagementSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LibraryManagementSystem.Controllers
 {
