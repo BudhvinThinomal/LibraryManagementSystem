@@ -1,0 +1,65 @@
+﻿@model LibraryManagementSystem.Models.Request.CreateStudentRequest
+
+@{
+    ViewData["Title"] = "Students Registration";
+    var successMessage = TempData["successMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+
+<h3>@ViewData["Title"]?.ToString()</h3>
+<hr />
+
+@if (!string.IsNullOrWhiteSpace(successMessage))
+{
+    <div class="alert alert-success">
+        <b>Success : </b>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <b>Error : </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<form method="post" asp-action="CreateStudentForm" class="mt-3 mb-3" autocomplete="off">
+    <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-control" asp-for="FirstName" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-control" asp-for="LastName" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="text" class="form-control" asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input type="text" class="form-control" asp-for="Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Telephone</label>
+        <input type="text" class="form-control" asp-for="Telephone" />
+        <span asp-validation-for="Telephone" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Registered Date</label>
+        <input type="date" class="form-control" asp-for="RegisteredDate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="RegisteredDate" class="text-danger"></span>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary form-control" />
+    </div>
+</form>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

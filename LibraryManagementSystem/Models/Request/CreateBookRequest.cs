@@ -8,20 +8,20 @@ namespace LibraryManagementSystem.Models.Request
         [Required]
         [MinLength(13, ErrorMessage = "ISBN should be 13 characters long")]
         [MaxLength(13, ErrorMessage = "ISBN should be 13 characters long")]
-        public required string ISBN { get; set; }
+        public string ISBN { get; set; }
         [Required]
-        public required string Title { get; set; }
+        public string Title { get; set; }
         [Required]
-        public required string Author { get; set; }
+        public string Author { get; set; }
         [Required]
-        public required string Publication { get; set; }
+        public string Publication { get; set; }
         public string? Edition { get; set; }
         [DisplayName("Published Year")]
         public int? PublishedYear { get; set; }
         [Required]
-        public required string Category { get; set; }
+        public string Category { get; set; }
         [DisplayName("Number of Copies")]
         [Required]
-        public required int? NumberOfCopies { get; set; }
+        public int? NumberOfCopies { get; set; }
     }
 }

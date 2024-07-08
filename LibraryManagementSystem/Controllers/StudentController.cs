@@ -1,5 +1,6 @@
-﻿using LibraryManagementSystem.Models.Entities;
-using LibraryManagementSystem.Repository;
+﻿using LibraryManagementSystem.Models;
+using LibraryManagementSystem.Models.Entities;
+using LibraryManagementSystem.Models.Request;
 using LibraryManagementSystem.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,18 +19,60 @@ namespace LibraryManagementSystem.Controllers
         public IActionResult Index()
         {
             List<StudentModel> studentList = new List<StudentModel>();
+            GetAllStudentRequest getAllStudentRequest = new GetAllStudentRequest();
 
             try
             {
-                studentList = _studentService.GetAllStudents();
-            } catch (Exception ex) {
-                TempData["errorMessage"] = ex.Message;
-                    
+                studentList = _studentService.GetAllStudents(getAllStudentRequest);
             }
-            
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+            }
             return View(studentList);
         }
 
-        
+        [HttpGet]
+        public IActionResult CreateStudent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateStudentForm(CreateStudentRequest request)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = _studentService.CreateStudent(request);
+                    if (result.ErrorMessage == null)
+                    {
+                        TempData["successMessage"] = "Student Registered Successfully";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["errorMessage"] = "Failed to Register the Student. Please Recheck the Student Details";
+                        return View("CreateStudent");
+                    }
+                }
+                else
+                {
+                    TempData["errorMessage"] = "Student Details Not Valid";
+                    return View("CreateStudent");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+
+            }
+        }
+
+
+
+
     }
 }
