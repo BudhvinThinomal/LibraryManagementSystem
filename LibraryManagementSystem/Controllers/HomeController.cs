@@ -34,7 +34,12 @@ namespace LibraryManagementSystem.Controllers
 
             }
 
-            return View(bookList);
+            HomeView homeView = new HomeView() { 
+                BookList = bookList,
+                GetAllBookRequest = request
+            };
+
+            return View(homeView);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
