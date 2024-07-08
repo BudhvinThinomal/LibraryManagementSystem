@@ -26,32 +26,37 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
 
 
 <form>
+   @*  <div>
+        <input asp-for="LastName" class="form-control" />
+        <button type="button" class="btn-close float-end"  aria-label="Search"></button>
+    </div> *@
+
     <table id="bookTable" class="table table-bordered table-striped table-responsive table-hover">
         <thead class="bg-dark text-light">
             <tr class="text-center">
                 <th>Ref Number</th>
                 <th>Title</th>
                 <th>Publication</th>
-                @* <th>Author</th>
-                <th>Student Name</th> *@
+                <th>Author</th>
+                <th>Student Name</th>
                 <th>Issued Date</th>
-                @* <th>Return Date</th> *@
+                <th>Return Date</th>
             </tr>
         </thead>
 
-       @*  <tbody>
+        <tbody>
             @if (Model != null && Model.Any())
             {
                 @foreach (var book in Model)
                 {
                     <tr>
                         <td>@book.ReferenceNumber</td>
-                        <td>@book.Title</td>
-                        <td>@book.Publication</td>
-                        <td>@book.Author</td>
-                        <td>@book.StudentName</td>
-                        <td>@book.IssueDate</td>
-                        <td>@book.ReturnDate</td>
+                        <td>@(string.IsNullOrWhiteSpace(book.Title) ? "-" : book.Title)</td>
+                        <td>@(string.IsNullOrWhiteSpace(book.Publication) ? "-" : book.Publication)</td>
+                        <td>@(string.IsNullOrWhiteSpace(book.Author) ? "-" : book.Author)</td>
+                        <td>@(string.IsNullOrWhiteSpace(book.StudentName) ? "-" : book.StudentName)</td>
+                        <td>@(book.IssueDate.HasValue ? book.IssueDate.Value.ToString("MM/dd/yyyy") : "-")</td>
+                        <td>@(book.ReturnDate.HasValue ? book.ReturnDate.Value.ToString("MM/dd/yyyy") : "-")</td>
                     </tr>
                 }
 
@@ -66,179 +71,17 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
                     </td>
                 </tr>
             }
-        </tbody> *@
+        </tbody>
     </table>
 </form>
 
 @section Scripts{
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-
     <script>
-        $.fn.dataTable.pipeline = function (opts) {
-            // Configuration options
-            var conf = $.extend({
-                pages: 0,     
-                url: 'Home/GetFilteredBooks',  
-                data: null,   
-                method: 'GET' 
-            }, opts);
-
-            // Private variables for storing the cache
-            var cacheLower = -1;
-            var cacheUpper = null;
-            var cacheLastRequest = null;
-            var cacheLastJson = null;
-
-            return function (request, drawCallback, settings) {
-                var ajax = false;
-                var requestStart = request.start;
-                var drawStart = request.start;
-                var requestLength = request.length;
-                var requestEnd = requestStart + requestLength;
-
-                if (settings.clearCache) {
-                    // API requested that the cache be cleared
-                    ajax = true;
-                    settings.clearCache = false;
-                }
-                else if (cacheLower < 0 || requestStart < cacheLower || requestEnd > cacheUpper) {
-                    // outside cached data - need to make a request
-                    ajax = true;
-                }
-                else if (JSON.stringify(request.order) !== JSON.stringify(cacheLastRequest.order) ||
-                    JSON.stringify(request.columns) !== JSON.stringify(cacheLastRequest.columns) ||
-                    JSON.stringify(request.search) !== JSON.stringify(cacheLastRequest.search)
-                ) {
-                    // properties changed (ordering, columns, searching)
-                    ajax = true;
-                }
-
-                // Store the request for checking next time around
-                cacheLastRequest = $.extend(true, {}, request);
-
-                if (ajax) {
-                    
-                    if (requestStart < cacheLower) {
-                        requestStart = requestStart - (requestLength * (conf.pages - 1));
-
-                        if (requestStart < 0) {
-                            requestStart = 0;
-                        }
-                    }
-
-                    cacheLower = requestStart;
-                    cacheUpper = requestStart + (requestLength * conf.pages);
-
-                    request.start = requestStart;
-                    request.length = requestLength * conf.pages;
-
-                    // Provide the same `data` options as DataTables.
-                    if (typeof conf.data === 'function') {
-                        // data object to submit
-                        var d = conf.data(request);
-                        if (d) {
-                            $.extend(request, d);
-                        }
-                    }
-                    else if ($.isPlainObject(conf.data)) {
-                        // As an object, the data given extends the default
-                        $.extend(request, conf.data);
-                    }
-
-                    settings.jqXHR = $.ajax({
-                        "type": conf.method,
-                        "url": conf.url,
-                        "data": request,
-                        "dataType": "json",
-                        "cache": false,
-                        "success": function (json) {
-                            cacheLastJson = $.extend(true, {}, json);
-
-                            if (cacheLower != drawStart) {
-                                json.data.splice(0, drawStart - cacheLower);
-                            }
-                            if (requestLength >= -1) {
-                                json.data.splice(requestLength, json.data.length);
-                            }
-
-                            drawCallback(json);
-                        }
-                    });
-                }
-                else {
-                    json = $.extend(true, {}, cacheLastJson);
-                    json.draw = request.draw; 
-                    json.data.splice(0, requestStart - cacheLower);
-                    json.data.splice(requestLength, json.data.length);
-
-                    drawCallback(json);
-                }
-            }
-        };
-
-        
-        $.fn.dataTable.Api.register('clearPipeline()', function () {
-            return this.iterator('table', function (settings) {
-                settings.clearCache = true;
+          $(document).ready(function () {
+                $('#bookTable').DataTable({
+                    searching: false,
+                });
             });
-        });
-       
-        $(document).ready(function () {
-            $('#bookTable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "searching": true,
-                "paging": true,
-                "ajax": $.fn.dataTable.pipeline({
-                    url: 'Home/GetFilteredBooks',
-                    pages: 0 //number of pages to cache
-                }),
-                "columns": [
-                    // For Student.Id
-                    { "data": "referenceNumber", "name": "ReferenceNumber" },
-                    // For Student.Firstname
-                    { "data": "title", "name": "Title" },
-                    // For Student.Lastname
-                    { "data": "publication", "name": "Publication" },
-                    // For Student.CreatedDate
-                    {
-                        "data": "issueDate", "name": "IssueDate",
-                        "render": function (data) {
-                            var date = new Date(data);
-                            return date? date.toLocaleString() : "-";
-                        }
-                    },
-                    // {
-                    //     'data': null,
-                    //     'render': function (data, type, row) {
-                    //         return '<button id="' + row.referencenumber + '" onclick="detailsclick(this)">details</button>'
-                    //             + '<button id="' + row.referencenumber + '" onclick="editclick(this)">edit</button>'
-                    //     }
-                    // }
-                ],
-                language: {
-                    processing: '<div class="spinner"></div>',
-                    zeroRecords: "No Book Records Available!!"
-                }
-            });
-        });
-
-        //Details button listener
-        function detailsClick(obj) {
-            //var rowID = $(obj).attr('id');
-            var studentId = $(obj).closest('tr').find('td:first').html();
-            //Go to details page of student
-            window.location.replace("Students/Details/" + studentId);
-
-        }
-        //Edit button listener
-        function editClick(obj) {
-            //var rowID = $(obj).attr('id');
-            var studentId = $(obj).closest('tr').find('td:first').html();
-            //Go to edit page of student
-            //window.location.replace("Students/Edit/" + studentId);
-            alert("Cannot edit student " + studentId + " yet. Prepare Students/Edit view first.");
-        }
-       
     </script>
 }

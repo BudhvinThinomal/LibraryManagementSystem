@@ -47,14 +47,14 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
                     <tr>
                         <td>@student.StudentID</td>
-                        <td>@student.StudentName</td>
-                        <td>@student.FirstName</td>
-                        <td>@student.LastName</td>
-                        <td>@student.Email</td>
-                        <td>@student.Address</td>
-                        <td>@student.Telephone</td>
-                        <td>@student.RegisteredDate</td>
-                        <td>@student.TerminatedDate</td>
+                        <td>@(string.IsNullOrWhiteSpace(student.StudentName) ? "-" : student.StudentName)</td>
+                        <td>@(string.IsNullOrWhiteSpace(student.FirstName) ? "-" : student.FirstName)</td>
+                        <td>@(string.IsNullOrWhiteSpace(student.LastName) ? "-" : student.LastName)</td>
+                        <td>@(string.IsNullOrWhiteSpace(student.Email) ? "-" : student.Email)</td>
+                        <td>@(string.IsNullOrWhiteSpace(student.Address) ? "-" : student.Address)</td>
+                        <td>@(string.IsNullOrWhiteSpace(student.Telephone) ? "-" : student.Telephone)</td>
+                        <td>@(student.RegisteredDate.HasValue ? student.RegisteredDate.Value.ToString("MM/dd/yyyy") : "-")</td>
+                        <td>@(student.TerminatedDate.HasValue ? student.TerminatedDate.Value.ToString("MM/dd/yyyy") : "-")</td>
                     </tr>
                 }
                 
@@ -72,3 +72,14 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
         </tbody>
     </table>
 </form>
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#studentTable').DataTable({
+                searching: false,
+            });
+        });
+    </script>
+}

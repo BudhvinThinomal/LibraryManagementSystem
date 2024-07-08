@@ -9,8 +9,8 @@
         public string Email { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }
-        public DateTime RegisteredDate { get; set; }
-        public DateTime TerminatedDate { get; set; }
+        public DateTime? RegisteredDate { get; set; }
+        public DateTime? TerminatedDate { get; set; }
         public int TotalRows { get; set; }
     }
 }
