@@ -148,5 +148,62 @@ namespace LibraryManagementSystem.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult EditStudent(int id)
+        {
+            StudentModel student = new StudentModel();
+
+            try
+            {
+                student = _studentService.GetStudent(id);
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+            }
+
+            if (student == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(student);
+        }
+
+        [HttpPost]
+        public IActionResult EditStudentForm(StudentModel request)
+        {
+            try
+            {
+                EditStudentRequest editStudentRequest = new EditStudentRequest() { 
+                    StudentId= request.StudentID,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Email = request.Email,
+                    Address = request.Address,
+                    Telephone = request.Telephone,
+                };
+               
+                var result = _studentService.EditStudent(editStudentRequest);
+                if (result.ErrorMessage == null)
+                {
+                    TempData["successMessage"] = "Student Edited Successfully";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["errorMessage"] = "Failed to Edit the Student. Please Recheck the Student Details";
+                    return View("EditStudent");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+
+            }
+        }
+
     }
 }

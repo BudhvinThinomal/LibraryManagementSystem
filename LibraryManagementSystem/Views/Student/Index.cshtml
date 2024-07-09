@@ -56,7 +56,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
                     <td>@(student.TerminatedDate.HasValue ? student.TerminatedDate.Value.ToString("MM/dd/yyyy") : "-")</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                            <a asp-action="Edit" asp-route-id="@student.StudentID" class="btn btn-primary m-1">Edit</a>
+                            <a asp-action="EditStudent" asp-route-id="@student.StudentID" class="btn btn-primary m-1">Edit</a>
                             <a asp-action="ViewStudent" asp-route-id="@student.StudentID" class="btn btn-success m-1">Details</a>
                             @{
                                 if (!student.TerminatedDate.HasValue)

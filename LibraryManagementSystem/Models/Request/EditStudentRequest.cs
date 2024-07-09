@@ -20,10 +20,5 @@ namespace LibraryManagementSystem.Models.Request
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Telephone Number should be 10 digits long")]
         [MaxLength(10, ErrorMessage = "Telephone should be Maximum 10 characters long")]
         public string? Telephone { get; set; }
-        [DisplayName("Registered Date")]
-        [Required]
-        public DateTime RegisteredDate { get; set; }
-        [DisplayName("Terminated Date")]
-        public DateTime? TerminatedDate { get; set; }
     }
 }

@@ -147,8 +147,6 @@ namespace LibraryManagementSystem.Repository
                     param.Add("@Email", request.Email);
                     param.Add("@Address", request.Address);
                     param.Add("@Telephone", request.Telephone);
-                    param.Add("@RegisteredDate", request.RegisteredDate);
-                    param.Add("@TerminatedDate", request.TerminatedDate);
 
                     int _ID = con.Query<int>(Query, param, commandType: CommandType.StoredProcedure).FirstOrDefault();
 
