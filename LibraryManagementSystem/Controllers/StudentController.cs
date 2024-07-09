@@ -3,6 +3,7 @@ using LibraryManagementSystem.Models.Entities;
 using LibraryManagementSystem.Models.Request;
 using LibraryManagementSystem.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -62,6 +63,59 @@ namespace LibraryManagementSystem.Controllers
                     TempData["errorMessage"] = "Student Details Not Valid";
                     return View("CreateStudent");
                 }
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+
+            }
+        }
+
+        [HttpGet]
+        public IActionResult TerminateStudent(int id)
+        {
+            StudentModel student = new StudentModel();
+
+            try
+            {
+                student = _studentService.GetStudent(id);
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+            }
+
+            if (student == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(student);
+        }
+
+        [HttpPost]
+        public IActionResult Terminate(int StudentID)
+        {
+            try
+            {
+                TerminateStudentRequest terminateStudentRequest = new TerminateStudentRequest() {
+                    StudentId = StudentID,
+                    TerminatedDate = DateTime.Now,
+                };
+                
+                var result = _studentService.TerminateStudent(terminateStudentRequest);
+                if (result.ErrorMessage == null)
+                {
+                    TempData["successMessage"] = "Student Terminated Successfully";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["errorMessage"] = "Failed to Terminate the Student.";
+                    return RedirectToAction("Index");
+                }
+                
             }
             catch (Exception ex)
             {

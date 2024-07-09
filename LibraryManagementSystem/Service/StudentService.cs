@@ -42,5 +42,50 @@ namespace LibraryManagementSystem.Service
                 };
             }
         }
+
+        //Get Student
+        public StudentModel GetStudent(int StudentId)
+        {
+            try
+            {
+                return _studentRepository.GetStudent(StudentId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //Edit Student
+        public EditStudentResponse EditStudent(EditStudentRequest request)
+        {
+            try
+            {
+                return _studentRepository.EditStudent(request);
+            }
+            catch (Exception ex)
+            {
+                return new EditStudentResponse()
+                {
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
+
+        //Terminate Student
+        public TerminateStudentResponse TerminateStudent(TerminateStudentRequest request)
+        {
+            try
+            {
+                return _studentRepository.TerminateStudent(request);
+            }
+            catch (Exception ex)
+            {
+                return new TerminateStudentResponse()
+                {
+                    ErrorMessage = ex.Message
+                };
+            }
+        }
     }
 }

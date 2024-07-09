@@ -37,6 +37,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
                 <th>Telephone</th>
                 <th>Registered Date</th>
                 <th>Terminated Date</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -53,6 +54,19 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
                     <td>@(string.IsNullOrWhiteSpace(student.Telephone) ? "-" : student.Telephone)</td>
                     <td>@(student.RegisteredDate.HasValue ? student.RegisteredDate.Value.ToString("MM/dd/yyyy") : "-")</td>
                     <td>@(student.TerminatedDate.HasValue ? student.TerminatedDate.Value.ToString("MM/dd/yyyy") : "-")</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a asp-action="Edit" asp-route-id="@student.StudentID" class="btn btn-primary m-1">Edit</a>
+                            <a asp-action="Details" asp-route-id="@student.StudentID" class="btn btn-success m-1">Details</a>
+                            @{
+                                if (!student.TerminatedDate.HasValue)
+                                {
+                                    <a asp-action="TerminateStudent" asp-route-id="@student.StudentID" class="btn btn-danger m-1">Terminate</a>
+                                }
+                            }
+                        </div>
+                        
+                    </td>
                 </tr> 
             } 
         </tbody>
