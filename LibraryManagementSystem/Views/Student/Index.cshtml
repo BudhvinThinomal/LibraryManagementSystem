@@ -57,7 +57,7 @@ else if (!string.IsNullOrWhiteSpace(errorMessage))
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a asp-action="Edit" asp-route-id="@student.StudentID" class="btn btn-primary m-1">Edit</a>
-                            <a asp-action="Details" asp-route-id="@student.StudentID" class="btn btn-success m-1">Details</a>
+                            <a asp-action="ViewStudent" asp-route-id="@student.StudentID" class="btn btn-success m-1">Details</a>
                             @{
                                 if (!student.TerminatedDate.HasValue)
                                 {

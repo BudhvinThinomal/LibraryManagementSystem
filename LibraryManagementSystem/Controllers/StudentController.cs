@@ -125,7 +125,27 @@ namespace LibraryManagementSystem.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult ViewStudent(int id)
+        {
+            StudentModel student = new StudentModel();
 
+            try
+            {
+                student = _studentService.GetStudent(id);
+            }
+            catch (Exception ex)
+            {
+                TempData["errorMessage"] = ex.Message;
+            }
+
+            if (student == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(student);
+        }
 
 
     }
